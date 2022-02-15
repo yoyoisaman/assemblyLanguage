@@ -1,0 +1,33 @@
+A1:
+先依照版本從教授給的網址下載 arm-cross-toolchain-linux-64-20.4.tar.gz ， hw1.s 與 sample.c 。
+再打開我的 Ubuntun20.04Lts ，安裝一大堆投影片上的套件。
+用 mkdir assem_hw1 創建一個資料夾 用 mv /mnt/c/Users/User/Downloads/hw1.s /mnt/c/Users/User/Downloads/sample.c  ~/assem_hw1
+這樣就能把等等會用到的兩個檔案放在 assem_hw1 這個資料夾。
+
+用cd /mnt/c/Users/User/Downloads跑到我的下載資料夾，用 mv ./arm-cross-toolchain-linux-64-20.4.tar.gz  ~/arm-cross-toolchain.tar.gz 把檔案移到我的目錄。
+然後用 tar -zxvf ./arm-cross-toolchain.tar.gz 把壓縮檔解壓縮到目錄。
+用 cd arm-tool-20.4/bin/ 跑到bin資料夾內，用以下的指令開始對指定的檔案進行組譯與編譯
+./arm-none-eabi-as ~/assem_hw1/hw1.s -o ~/assem_hw1/hw1.o
+./arm-none-eabi-gcc ~/assem_hw1/hw1.s –o ~/assem_hw1/hw1.exe
+./arm-none-eabi-gcc -O0 -S ~/assem_hw1/sample.c -o ~/assem_hw1/sample_O0.s
+./arm-none-eabi-gcc -O3 -S ~/assem_hw1/sample.c -o ~/assem_hw1/sample_O3.s
+./arm-none-eabi-as  ~/assem_hw1/sample_O0.s -o ~/assem_hw1/sample_O0.o
+./arm-none-eabi-as  ~/assem_hw1/sample_O3.s -o ~/assem_hw1/sample_O3.o
+這樣就完成了執行ARM software development tool 的過程。
+最後在打好 answer.txt 後，就可以用 tar -jcvf hw1_409410048.tar.bz2 ~/assem_hw1 打包檔案了。
+
+
+A2:
+hw1.o 檔與 hw1.exe 檔的差別在前者是不可執行的 Object file 且檔案大小較小。
+後者是可執行的 .exe 檔，檔案大小也較大。
+會造成這樣的原因是因為 Object file 是 source program 是在經過 Assembler 之後造出來的機器碼。
+而這個 Object file 還要在經過 Linker 處理之後，才會變成後者的可執行的 .exe 檔案，所以有所區別。
+
+
+A3:
+sample_O0.o的檔案大小是 1016kb ，而sample_O3.o的檔案大小是 1020kb ，前者較小後者較大。
+原因是因為在 gcc 在編譯時使用的的參數 -O ，此參數提供了幾種優化選項可以讓使用者對檔案的大小或是執行的速度做出取捨。
+以 sample_O0 使用的的參數O0來說，就是不做任何優化，採取預設編譯。
+與 O0 比較起來， sample_O3 使用的的 O3 參數能提高程式的執行速度，但相對來說就會增加檔案的大小。
+也因此， sample_O3.o 的檔案比 sample_O0.o 的檔案大了些，但可以預見的是執行效率也會比較高。
+
